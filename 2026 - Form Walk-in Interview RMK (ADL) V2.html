@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Evaluasi Interview Awal</title>
+    
+    <!-- Menggunakan Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        // Menggunakan sistem font Apple (SF Pro) secara native
+                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"Segoe UI"', 'Roboto', 'sans-serif'] 
+                    },
+                    colors: {
+                        apple: {
+                            blue: '#007AFF', // Warna biru khas iOS
+                            blueHover: '#0056b3'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Animasi Liquid Blob di Latar Belakang */
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+            animation: blob 10s infinite alternate;
+        }
+        .animation-delay-2000 { animation-delay: 2s; }
+        .animation-delay-4000 { animation-delay: 4s; }
+
+        /* Custom scrollbar bergaya Mac/iOS */
+        textarea::-webkit-scrollbar { width: 6px; }
+        textarea::-webkit-scrollbar-track { background: transparent; }
+        textarea::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        
+        /* Menghilangkan spinner bawaan browser pada input number */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        /* Radio button aksen iOS */
+        input[type="radio"] { accent-color: #007AFF; }
+    </style>
+</head>
+<body class="text-slate-800 font-sans antialiased min-h-screen relative selection:bg-apple-blue selection:text-white">
+
+    <!-- Latar Belakang Liquid Mesh Gradient -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none bg-[#f2f2f7]">
+        <!-- Blob 1 -->
+        <div class="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-300/40 mix-blend-multiply filter blur-[80px] animate-blob"></div>
+        <!-- Blob 2 -->
+        <div class="absolute top-[20%] right-[-10%] w-[40vw] h-[40vw] rounded-full bg-purple-300/40 mix-blend-multiply filter blur-[80px] animate-blob animation-delay-2000"></div>
+        <!-- Blob 3 -->
+        <div class="absolute bottom-[-20%] left-[20%] w-[60vw] h-[60vw] rounded-full bg-pink-300/40 mix-blend-multiply filter blur-[80px] animate-blob animation-delay-4000"></div>
+    </div>
+
+    <div class="max-w-3xl mx-auto p-4 md:p-8 relative z-10">
+        
+        <!-- Header Form Liquid Glass -->
+        <div class="text-center mb-10 mt-6 bg-white/30 backdrop-blur-2xl border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2 tracking-tight">Form Evaluasi Interview</h1>
+            <p class="text-[15px] font-semibold text-apple-blue mb-1">Grup Rekrutmen, Manajemen Karir & Kinerja</p>
+	    <p class="text-[14px] text-slate-500">Pencatatan walk-in interview kandidat</p>
+            <p class="text-[14px] text-slate-500">Divisi Human Capital</p>
+        </div>
+        
+        <form id="evaluasiForm" class="space-y-6">
+            
+            <!-- No Referensi -->
+            <div class="flex justify-end items-center mb-2">
+                <div class="bg-white/40 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/60 shadow-[0_4px_16px_rgba(0,0,0,0.03)] flex items-center gap-3">
+                    <label for="id_wawancara" class="text-[13px] font-medium text-slate-500">No. Ref:</label>
+                    <input type="text" id="id_wawancara" name="id_wawancara" readonly 
+                        class="bg-transparent text-slate-800 font-mono font-bold text-center w-28 outline-none cursor-not-allowed">
+                </div>
+            </div>
+
+            <!-- BAGIAN 1: PROGRAM REKRUTMEN -->
+            <div class="bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/60 p-6 md:p-8">
+                <h2 class="text-[17px] font-bold text-slate-800 mb-5 tracking-tight flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-full bg-white/50 shadow-sm flex items-center justify-center text-apple-blue">1</span> 
+                    Program Rekrutmen
+                </h2>
+                
+                <div class="space-y-5">
+                    <div>
+                        <label for="nama_program" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Nama Program Rekrutmen</label>
+                        <input type="text" id="nama_program" name="nama_program" required placeholder="Contoh: Management Trainee 2026"
+                            class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label for="posisi_lamaran" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Posisi Lamaran</label>
+                            <input type="text" id="posisi_lamaran" name="posisi_lamaran" required placeholder="Contoh: Frontend Developer"
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                        </div>
+                        <div>
+                            <label for="status_kerja" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Status Hubungan Kerja</label>
+                            <select id="status_kerja" name="status_kerja" required
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)] appearance-none cursor-pointer">
+                                <option value="">-- Pilih Status --</option>
+                                <option value="Tetap">Karyawan Tetap (PKWTT)</option>
+                                <option value="Kontrak">Karyawan Kontrak (PKWT)</option>
+                                <option value="Magang">Magang / Internship</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAGIAN 2: DATA KANDIDAT -->
+            <div class="bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/60 p-6 md:p-8">
+                <h2 class="text-[17px] font-bold text-slate-800 mb-5 tracking-tight flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-full bg-white/50 shadow-sm flex items-center justify-center text-apple-blue">2</span> 
+                    Data Kandidat
+                </h2>
+                
+                <!-- Upload Foto Glass Style -->
+                <div class="flex flex-col items-center justify-center p-6 mb-6 rounded-3xl bg-white/30 backdrop-blur-md border border-white/50 shadow-inner cursor-pointer hover:bg-white/40 transition-colors" onclick="document.getElementById('foto_kandidat').click()">
+                    <input type="file" id="foto_kandidat" name="foto_kandidat" accept="image/*" class="hidden">
+                    
+                    <div id="photoPreview" class="w-28 h-36 bg-white/50 backdrop-blur-lg border border-white/80 shadow-sm rounded-2xl flex items-center justify-center overflow-hidden text-slate-400 text-center text-[13px] mb-3">
+                        <span class="block">
+                            <svg class="w-7 h-7 mx-auto mb-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            Foto
+                        </span>
+                    </div>
+                    <p id="foto_error" class="text-red-500 text-[13px] font-medium hidden mb-2">Peringatan: Maks 5MB!</p>
+                    <button type="button" class="text-[14px] font-semibold text-apple-blue bg-white/60 backdrop-blur-md px-5 py-2 rounded-full border border-white/80 shadow-sm">Pilih atau Ambil Foto</button>
+                </div>
+                
+                <div class="space-y-5">
+                    <div>
+                        <label for="nama" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Nama Lengkap Sesuai KTP</label>
+                        <input type="text" id="nama" name="nama" required placeholder="Ketik nama lengkap..."
+                            class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                    </div>                
+                    
+                    <div class="grid grid-cols-2 gap-5">
+                        <div>
+                            <label for="jenis_kelamin" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Kelamin</label>
+                            <select id="jenis_kelamin" name="jenis_kelamin" required
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] appearance-none cursor-pointer shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                                <option value="">-- Pilih --</option>
+                                <option value="Pria">Pria</option>
+                                <option value="Wanita">Wanita</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="tanggal_lahir" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Tgl Lahir</label>
+                            <input type="date" id="tanggal_lahir" name="tanggal_lahir" required
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-5">
+                        <div>
+                            <label for="usia" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Usia</label>
+                            <input type="number" id="usia" name="usia" readonly placeholder="Otomatis" 
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/40 bg-black/5 text-slate-500 cursor-not-allowed outline-none font-medium text-[15px]">
+                        </div>
+                        <div>
+                            <label for="domisili" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Domisili</label>
+                            <input type="text" id="domisili" name="domisili" required placeholder="Cth: Jakarta"
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label for="pendidikan" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Pendidikan</label>
+                            <select id="pendidikan" name="pendidikan" required
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] appearance-none cursor-pointer shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                                <option value="">-- Pilih --</option>
+                                <option value="SMA/SMK">SMA / SMK Sederajat</option>
+                                <option value="D3">Diploma 3 (D3)</option>
+                                <option value="S1">Sarjana (S1 / D4)</option>
+                                <option value="S2">Magister (S2)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="institusi" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Institusi</label>
+                            <input type="text" id="institusi" name="institusi" required placeholder="Cth: Universitas X"
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="jurusan" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Jurusan / Program Studi</label>
+                        <input type="text" id="jurusan" name="jurusan" required placeholder="Cth: Ilmu Komputer"
+                            class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAGIAN 3: POIN PENILAIAN -->
+            <div class="bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/60 p-6 md:p-8">
+                <h2 class="text-[17px] font-bold text-slate-800 mb-2 tracking-tight flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-full bg-white/50 shadow-sm flex items-center justify-center text-apple-blue">3</span> 
+                    Penilaian Interview
+                </h2>
+                <p class="text-[13px] text-slate-500 mb-6 ml-10">Skala 1 (Kurang) hingga 5 (Sangat Baik).</p>
+                
+                <div class="space-y-6">
+                    <!-- Item Penilaian (Diulang) -->
+                    <div class="bg-white/30 backdrop-blur-md p-5 rounded-3xl border border-white/50 shadow-sm">
+                        <label class="block text-[15px] font-semibold text-slate-800 mb-4 ml-1">Motivasi Melamar</label>
+                        <div class="bg-white/40 backdrop-blur-lg rounded-2xl p-3 border border-white/60 shadow-inner flex items-center justify-between max-w-[280px] mb-4">
+                            <span class="text-[11px] font-medium text-slate-400 leading-tight">Kurang</span>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_motivasi" value="1" required class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">1</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_motivasi" value="2" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">2</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_motivasi" value="3" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">3</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_motivasi" value="4" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">4</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_motivasi" value="5" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">5</span></label>
+                            <span class="text-[11px] font-medium text-slate-400 leading-tight">Baik</span>
+                        </div>
+                        <textarea id="catatan_motivasi" name="catatan_motivasi" placeholder="Tambahkan catatan singkat (opsional)..." class="w-full px-4 py-3 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[14px] resize-y min-h-[80px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"></textarea>
+                    </div>
+
+                    <div class="bg-white/30 backdrop-blur-md p-5 rounded-3xl border border-white/50 shadow-sm">
+                        <label class="block text-[15px] font-semibold text-slate-800 mb-4 ml-1">Pemahaman Produk / Jabatan</label>
+                        <div class="bg-white/40 backdrop-blur-lg rounded-2xl p-3 border border-white/60 shadow-inner flex items-center justify-between max-w-[280px] mb-4">
+                            <span class="text-[11px] font-medium text-slate-400 leading-tight">Kurang</span>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_pemahaman" value="1" required class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">1</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_pemahaman" value="2" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">2</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_pemahaman" value="3" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">3</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_pemahaman" value="4" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">4</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_pemahaman" value="5" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">5</span></label>
+                            <span class="text-[11px] font-medium text-slate-400 leading-tight">Baik</span>
+                        </div>
+                        <textarea id="catatan_pemahaman" name="catatan_pemahaman" placeholder="Tambahkan catatan singkat (opsional)..." class="w-full px-4 py-3 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[14px] resize-y min-h-[80px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"></textarea>
+                    </div>
+
+                    <div class="bg-white/30 backdrop-blur-md p-5 rounded-3xl border border-white/50 shadow-sm">
+                        <label class="block text-[15px] font-semibold text-slate-800 mb-4 ml-1">Kemampuan Teknis (Hard Skills)</label>
+                        <div class="bg-white/40 backdrop-blur-lg rounded-2xl p-3 border border-white/60 shadow-inner flex items-center justify-between max-w-[280px] mb-4">
+                            <span class="text-[11px] font-medium text-slate-400 leading-tight">Kurang</span>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_teknis" value="1" required class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">1</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_teknis" value="2" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">2</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_teknis" value="3" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">3</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_teknis" value="4" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">4</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_teknis" value="5" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">5</span></label>
+                            <span class="text-[11px] font-medium text-slate-400 leading-tight">Baik</span>
+                        </div>
+                        <textarea id="catatan_teknis" name="catatan_teknis" placeholder="Tambahkan catatan singkat (opsional)..." class="w-full px-4 py-3 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[14px] resize-y min-h-[80px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"></textarea>
+                    </div>
+
+                    <div class="bg-white/30 backdrop-blur-md p-5 rounded-3xl border border-white/50 shadow-sm">
+                        <label class="block text-[15px] font-semibold text-slate-800 mb-4 ml-1">Cultural Fit (Soft Skills)</label>
+                        <div class="bg-white/40 backdrop-blur-lg rounded-2xl p-3 border border-white/60 shadow-inner flex items-center justify-between max-w-[280px] mb-4">
+                            <span class="text-[11px] font-medium text-slate-400 leading-tight">Kurang</span>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_personality" value="1" required class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">1</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_personality" value="2" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">2</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_personality" value="3" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">3</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_personality" value="4" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">4</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_personality" value="5" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">5</span></label>
+                            <span class="text-[11px] font-medium text-slate-400 leading-tight">Baik</span>
+                        </div>
+                        <textarea id="catatan_personality" name="catatan_personality" placeholder="Tambahkan catatan singkat (opsional)..." class="w-full px-4 py-3 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[14px] resize-y min-h-[80px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"></textarea>
+                    </div>
+
+                    <div class="bg-white/30 backdrop-blur-md p-5 rounded-3xl border border-white/50 shadow-sm">
+                        <label class="block text-[15px] font-semibold text-slate-800 mb-4 ml-1">Catatan Finansial & Perilaku</label>
+                        <div class="bg-white/40 backdrop-blur-lg rounded-2xl p-3 border border-white/60 shadow-inner flex items-center justify-between max-w-[280px] mb-4">
+                            <span class="text-[11px] font-medium text-slate-400 leading-tight">Kurang</span>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_finansial" value="1" required class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">1</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_finansial" value="2" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">2</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_finansial" value="3" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">3</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_finansial" value="4" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">4</span></label>
+                            <label class="flex flex-col items-center cursor-pointer gap-1 group"><input type="radio" name="skala_finansial" value="5" class="w-5 h-5 cursor-pointer transform scale-110"><span class="text-[13px] font-semibold text-slate-600">5</span></label>
+                            <span class="text-[11px] font-medium text-slate-400 leading-tight">Baik</span>
+                        </div>
+                        <textarea id="catatan_finansial" name="catatan_finansial" placeholder="Tambahkan catatan singkat (opsional)..." class="w-full px-4 py-3 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[14px] resize-y min-h-[80px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAGIAN 4: KESIMPULAN -->
+            <div class="bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/60 p-6 md:p-8">
+                <h2 class="text-[17px] font-bold text-slate-800 mb-5 tracking-tight flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-full bg-white/50 shadow-sm flex items-center justify-center text-apple-blue">4</span> 
+                    Kesimpulan Interview
+                </h2>
+                <div>
+                    <textarea id="konklusi" name="konklusi" required placeholder="Tuliskan rangkuman dan pandangan Anda mengenai kandidat ini secara keseluruhan..." 
+                        class="w-full px-4 py-4 rounded-3xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all resize-y min-h-[120px] text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]"></textarea>
+                </div>
+            </div>
+
+            <!-- BAGIAN 5: HASIL AKHIR -->
+            <div class="bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/60 p-6 md:p-8">
+                <h2 class="text-[17px] font-bold text-slate-800 mb-5 tracking-tight flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-full bg-white/50 shadow-sm flex items-center justify-center text-apple-blue">5</span> 
+                    Hasil Akhir & Proyeksi
+                </h2>
+                
+                <div class="space-y-5">
+                    <div>
+                        <label for="hasil_akhir" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Sistem Rekomendasi</label>
+                        <input type="text" id="hasil_akhir" name="hasil_akhir" readonly placeholder="Terisi berdasarkan penilaian..."
+                            class="w-full px-4 py-4 rounded-2xl border border-white/40 bg-white/30 backdrop-blur-lg text-apple-blue font-bold cursor-not-allowed outline-none text-center text-[16px] shadow-sm">
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label for="proyeksi_jabatan" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Proyeksi Jabatan</label>
+                            <input type="text" id="proyeksi_jabatan" name="proyeksi_jabatan" placeholder="Cth: Staff IT"
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                        </div>
+                        <div>
+                            <label for="penempatan" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Penempatan</label>
+                            <input type="text" id="penempatan" name="penempatan" placeholder="Cth: Kantor Pusat"
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAGIAN 6: INTERVIEWER -->
+            <div class="bg-white/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/60 p-6 md:p-8">
+                <h2 class="text-[17px] font-bold text-slate-800 mb-5 tracking-tight flex items-center gap-2">
+                    <span class="w-8 h-8 rounded-full bg-white/50 shadow-sm flex items-center justify-center text-apple-blue">6</span> 
+                    Interviewer
+                </h2>
+                
+                <div class="space-y-5">
+                    <div>
+                        <label for="nama_interviewer" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Nama Lengkap</label>
+                        <input type="text" id="nama_interviewer" name="nama_interviewer" required placeholder="Sesuai profil Anda"
+                            class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label for="jabatan_interviewer" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Jabatan</label>
+                            <input type="text" id="jabatan_interviewer" name="jabatan_interviewer" required placeholder="Cth: HR Specialist"
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                        </div>
+                        <div>
+                            <label for="unit_kerja" class="block text-[14px] font-medium text-slate-700 mb-2 ml-1">Unit Kerja</label>
+                            <input type="text" id="unit_kerja" name="unit_kerja" required placeholder="Cth: Human Capital"
+                                class="w-full px-4 py-3.5 rounded-2xl border border-white/60 bg-white/40 backdrop-blur-md focus:bg-white/70 focus:ring-4 focus:ring-apple-blue/20 outline-none transition-all text-[15px] placeholder-slate-400 shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tombol Submit ala iOS Button -->
+            <button type="submit" class="btn-submit w-full flex justify-center items-center py-4 px-4 rounded-[2rem] shadow-lg text-[17px] font-bold text-white bg-apple-blue hover:bg-apple-blueHover backdrop-blur-xl border border-blue-400/50 focus:outline-none focus:ring-4 focus:ring-apple-blue/40 transition-all disabled:opacity-70 disabled:cursor-not-allowed mt-8 mb-4">
+                Simpan Hasil Evaluasi
+            </button>
+            
+            <div id="success-message" class="hidden"></div>
+        </form>
+    </div>
+
+    <!-- Modal Sukses dengan Ekstra Backdrop Blur iOS Style -->
+    <div id="modalSukses" class="hidden fixed inset-0 z-50 flex justify-center items-center bg-slate-900/20 backdrop-blur-xl p-4 transition-all duration-300">
+        <div class="bg-white/70 backdrop-blur-2xl p-8 rounded-[2.5rem] border border-white/80 text-center max-w-sm w-full shadow-[0_20px_50px_rgba(0,0,0,0.1)] transform scale-100 transition-transform">
+            <div class="w-20 h-20 mx-auto bg-green-500/10 rounded-full flex items-center justify-center mb-5 border border-green-500/20">
+                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h2 class="text-[22px] font-bold text-slate-800 mb-2 tracking-tight">Berhasil Disimpan</h2>
+            <p class="text-[15px] text-slate-500 mb-8 leading-relaxed">Data kandidat telah diunggah ke sistem dengan aman.</p>
+            <button onclick="document.getElementById('modalSukses').style.display='none'" class="w-full bg-apple-blue hover:bg-apple-blueHover text-white font-bold py-3.5 px-4 rounded-3xl transition-colors focus:ring-4 focus:ring-apple-blue/40 text-[16px]">
+                Selesai
+            </button>
+        </div>
+    </div>
+
+    <!-- SCRIPT LOGIKA (Sama persis dengan aslinya, tidak diubah fungsinya) -->
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzpmZZJcoPzxuwh4OIWPX0x2a7Pswp0Ub_wukSBeznOmAjLEoR8wQn158WnzHwvY-PV2Q/exec'; 
+        
+        const form = document.getElementById('evaluasiForm');
+        const successMessage = document.getElementById('success-message');
+        const btnSubmit = form.querySelector('.btn-submit');
+
+        function hitungSkor() {
+            const radioNames = ['skala_motivasi', 'skala_pemahaman', 'skala_teknis', 'skala_personality', 'skala_finansial'];
+            let total = 0;
+            let semuaTerisi = true;
+
+            radioNames.forEach(name => {
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                if (checked) {
+                    total += parseInt(checked.value);
+                } else {
+                    semuaTerisi = false;
+                }
+            });
+
+            const inputHasil = document.getElementById('hasil_akhir');
+            if (semuaTerisi) {
+                if (total >= 20) inputHasil.value = "Disarankan";
+                else if (total >= 15) inputHasil.value = "Dipertimbangkan";
+                else inputHasil.value = "Tidak Direkomendasikan";
+            } else {
+                inputHasil.value = "Belum Lengkap...";
+            }
+        }
+
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', hitungSkor);
+        });
+
+        const fotoInput = document.getElementById('foto_kandidat');
+        const photoPreview = document.getElementById('photoPreview');
+        const fotoErrorMsg = document.getElementById('foto_error');
+        
+        fotoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if(file.size > 5 * 1024 * 1024) {
+                    fotoErrorMsg.style.display = 'block';
+                    fotoInput.value = ''; 
+                    photoPreview.innerHTML = `<span class="block"><svg class="w-7 h-7 mx-auto mb-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Foto</span>`;
+                    return;
+                }
+                fotoErrorMsg.style.display = 'none';
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    photoPreview.innerHTML = `<img src="${event.target.result}" alt="Foto Kandidat" class="w-full h-full object-cover">`;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                photoPreview.innerHTML = `<span class="block"><svg class="w-7 h-7 mx-auto mb-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Foto</span>`;
+            }
+        });
+
+        function getBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        function generateInterviewID() {
+            const date = new Date();
+            const year = date.getFullYear().toString().slice(-2); 
+            const month = String(date.getMonth() + 1).padStart(2, '0'); 
+            const day = String(date.getDate()).padStart(2, '0'); 
+            const dateString = `${year}${month}${day}`; 
+            
+            let storedData = JSON.parse(localStorage.getItem('interviewSequenceData') || '{}');
+            
+            if (storedData.date !== dateString) {
+                storedData = { date: dateString, sequence: 1 };
+                localStorage.setItem('interviewSequenceData', JSON.stringify(storedData));
+            }
+            
+            const sequenceString = String(storedData.sequence).padStart(3, '0');
+            const newID = `${dateString}-${sequenceString}`;
+            document.getElementById('id_wawancara').value = newID;
+        }
+
+        function incrementSequenceNumber() {
+            const date = new Date();
+            const year = date.getFullYear().toString().slice(-2);
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            const dateString = `${year}${month}${day}`;
+
+            let storedData = JSON.parse(localStorage.getItem('interviewSequenceData') || '{}');
+            if (storedData.date === dateString) {
+                storedData.sequence += 1; 
+                localStorage.setItem('interviewSequenceData', JSON.stringify(storedData));
+            }
+        }
+
+        function simpanDataInterviewer() {
+            const nama = document.getElementById('nama_interviewer').value;
+            const jabatan = document.getElementById('jabatan_interviewer').value;
+            const unit = document.getElementById('unit_kerja').value;
+            localStorage.setItem('interviewer_nama', nama);
+            localStorage.setItem('interviewer_jabatan', jabatan);
+            localStorage.setItem('interviewer_unit', unit);
+        }
+
+        function muatDataInterviewer() {
+            const savedName = localStorage.getItem('interviewer_nama');
+            const savedJabatan = localStorage.getItem('interviewer_jabatan');
+            const savedUnit = localStorage.getItem('interviewer_unit');
+            if (savedName) document.getElementById('nama_interviewer').value = savedName;
+            if (savedJabatan) document.getElementById('jabatan_interviewer').value = savedJabatan;
+            if (savedUnit) document.getElementById('unit_kerja').value = savedUnit;
+        }
+
+        function simpanDataProgram() {
+            const today = new Date().toISOString().split('T')[0]; 
+            const program = document.getElementById('nama_program').value;
+            const posisi = document.getElementById('posisi_lamaran').value;
+            const status = document.getElementById('status_kerja').value;
+            
+            const dataProgram = {
+                tanggal: today,
+                program: program,
+                posisi: posisi,
+                status: status
+            };
+            localStorage.setItem('dataProgramHarian', JSON.stringify(dataProgram));
+        }
+
+        function muatDataProgram() {
+            const savedDataStr = localStorage.getItem('dataProgramHarian');
+            if (savedDataStr) {
+                const savedData = JSON.parse(savedDataStr);
+                const today = new Date().toISOString().split('T')[0];
+                
+                if (savedData.tanggal === today) {
+                    document.getElementById('nama_program').value = savedData.program || '';
+                    document.getElementById('posisi_lamaran').value = savedData.posisi || '';
+                    document.getElementById('status_kerja').value = savedData.status || '';
+                } else {
+                    localStorage.removeItem('dataProgramHarian');
+                }
+            }
+        }
+
+        function simpanDataPendidikan() {
+            const today = new Date().toISOString().split('T')[0];
+            const domisili = document.getElementById('domisili').value;
+            const pendidikan = document.getElementById('pendidikan').value;
+            const institusi = document.getElementById('institusi').value;
+            const jurusan = document.getElementById('jurusan').value;
+
+            const dataPendidikan = {
+                tanggal: today,
+                domisili: domisili,
+                pendidikan: pendidikan,
+                institusi: institusi,
+                jurusan: jurusan
+            };
+            localStorage.setItem('dataPendidikanHarian', JSON.stringify(dataPendidikan));
+        }
+
+        function muatDataPendidikan() {
+            const savedDataStr = localStorage.getItem('dataPendidikanHarian');
+            if (savedDataStr) {
+                const savedData = JSON.parse(savedDataStr);
+                const today = new Date().toISOString().split('T')[0];
+
+                if (savedData.tanggal === today) {
+                    document.getElementById('domisili').value = savedData.domisili || '';
+                    document.getElementById('pendidikan').value = savedData.pendidikan || '';
+                    document.getElementById('institusi').value = savedData.institusi || '';
+                    document.getElementById('jurusan').value = savedData.jurusan || '';
+                } else {
+                    localStorage.removeItem('dataPendidikanHarian');
+                }
+            }
+        }
+
+        const inputTanggalLahir = document.getElementById('tanggal_lahir');
+        const inputUsia = document.getElementById('usia');
+
+        inputTanggalLahir.addEventListener('change', function() {
+            if(this.value) {
+                const dob = new Date(this.value);
+                const today = new Date();
+                let age = today.getFullYear() - dob.getFullYear();
+                const m = today.getMonth() - dob.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+                inputUsia.value = age >= 0 ? age : 0;
+            } else {
+                inputUsia.value = '';
+            }
+        });
+
+        generateInterviewID();
+        muatDataInterviewer(); 
+        muatDataProgram(); 
+        muatDataPendidikan(); 
+
+        form.addEventListener('submit', async e => {
+            e.preventDefault(); 
+            simpanDataInterviewer();
+            simpanDataProgram(); 
+            simpanDataPendidikan(); 
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memproses...`;
+
+            try {
+                const formData = new FormData(form);
+                const dataObj = Object.fromEntries(formData.entries());
+
+                const file = fotoInput.files[0];
+                if (file) {
+                    const base64String = await getBase64(file);
+                    dataObj.foto_base64 = base64String.split(',')[1]; 
+                    dataObj.foto_mimeType = file.type;
+                    dataObj.foto_name = `${dataObj.id_wawancara}_${dataObj.nama.replace(/\s+/g, '_')}`; 
+                }
+
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: JSON.stringify(dataObj) 
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    document.getElementById('modalSukses').style.display = 'flex'; 
+                    
+                    form.reset(); 
+                    photoPreview.innerHTML = `<span class="block"><svg class="w-7 h-7 mx-auto mb-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Foto</span>`; 
+                    
+                    incrementSequenceNumber(); 
+                    generateInterviewID(); 
+                    
+                    muatDataInterviewer(); 
+                    muatDataProgram(); 
+                    muatDataPendidikan(); 
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan saat menyimpan data. Pastikan koneksi internet stabil dan coba lagi.');
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = 'Simpan Hasil Evaluasi';
+            }
+        });
+    </script>
+</body>
+</html>
