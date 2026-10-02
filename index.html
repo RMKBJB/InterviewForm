@@ -70,7 +70,7 @@
         <div class="text-center mb-10 mt-6 bg-white/30 backdrop-blur-2xl border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-8">
             <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2 tracking-tight">Form Evaluasi Interview</h1>
             <p class="text-[15px] font-semibold text-apple-blue mb-1">Grup Rekrutmen, Manajemen Karir & Kinerja</p>
-	    <p class="text-[14px] text-slate-500">Pencatatan walk-in interview kandidat</p>
+            <p class="text-[14px] text-slate-500">Pencatatan walk-in interview kandidat</p>
             <p class="text-[14px] text-slate-500">Divisi Human Capital</p>
         </div>
         
@@ -127,17 +127,27 @@
                 </h2>
                 
                 <!-- Upload Foto Glass Style -->
-                <div class="flex flex-col items-center justify-center p-6 mb-6 rounded-3xl bg-white/30 backdrop-blur-md border border-white/50 shadow-inner cursor-pointer hover:bg-white/40 transition-colors" onclick="document.getElementById('foto_kandidat').click()">
+                <div class="flex flex-col items-center justify-center p-6 mb-6 rounded-3xl bg-white/30 backdrop-blur-md border border-white/50 shadow-inner">
+                    <!-- Input file disembunyikan -->
                     <input type="file" id="foto_kandidat" name="foto_kandidat" accept="image/*" class="hidden">
                     
-                    <div id="photoPreview" class="w-28 h-36 bg-white/50 backdrop-blur-lg border border-white/80 shadow-sm rounded-2xl flex items-center justify-center overflow-hidden text-slate-400 text-center text-[13px] mb-3">
+                    <div id="photoPreview" class="w-28 h-36 bg-white/50 backdrop-blur-lg border border-white/80 shadow-sm rounded-2xl flex items-center justify-center overflow-hidden text-slate-400 text-center text-[13px] mb-4">
                         <span class="block">
                             <svg class="w-7 h-7 mx-auto mb-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                             Foto
                         </span>
                     </div>
-                    <p id="foto_error" class="text-red-500 text-[13px] font-medium hidden mb-2">Peringatan: Maks 5MB!</p>
-                    <button type="button" class="text-[14px] font-semibold text-apple-blue bg-white/60 backdrop-blur-md px-5 py-2 rounded-full border border-white/80 shadow-sm">Pilih atau Ambil Foto</button>
+                    <p id="foto_error" class="text-red-500 text-[13px] font-medium hidden mb-3">Peringatan: Maks 5MB!</p>
+                    
+                    <!-- Dua Tombol Pilihan -->
+                    <div class="flex w-full max-w-[240px] gap-3">
+                        <button type="button" onclick="pilihKamera()" class="flex-1 flex items-center justify-center gap-1.5 text-[13px] font-semibold text-white bg-apple-blue hover:bg-apple-blueHover py-2.5 rounded-xl shadow-sm transition-colors">
+                            📸 Kamera
+                        </button>
+                        <button type="button" onclick="pilihGaleri()" class="flex-1 flex items-center justify-center gap-1.5 text-[13px] font-semibold text-apple-blue bg-white/70 hover:bg-white border border-white/80 py-2.5 rounded-xl shadow-sm transition-colors">
+                            🖼️ Galeri
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="space-y-5">
@@ -213,7 +223,6 @@
                 <p class="text-[13px] text-slate-500 mb-6 ml-10">Skala 1 (Kurang) hingga 5 (Sangat Baik).</p>
                 
                 <div class="space-y-6">
-                    <!-- Item Penilaian (Diulang) -->
                     <div class="bg-white/30 backdrop-blur-md p-5 rounded-3xl border border-white/50 shadow-sm">
                         <label class="block text-[15px] font-semibold text-slate-800 mb-4 ml-1">Motivasi Melamar</label>
                         <div class="bg-white/40 backdrop-blur-lg rounded-2xl p-3 border border-white/60 shadow-inner flex items-center justify-between max-w-[280px] mb-4">
@@ -379,7 +388,7 @@
         </div>
     </div>
 
-    <!-- SCRIPT LOGIKA (Sama persis dengan aslinya, tidak diubah fungsinya) -->
+    <!-- SCRIPT LOGIKA -->
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzpmZZJcoPzxuwh4OIWPX0x2a7Pswp0Ub_wukSBeznOmAjLEoR8wQn158WnzHwvY-PV2Q/exec'; 
         
@@ -414,6 +423,21 @@
         document.querySelectorAll('input[type="radio"]').forEach(radio => {
             radio.addEventListener('change', hitungSkor);
         });
+
+        // ==========================================
+        // FUNGSI BARU UNTUK PILIH KAMERA ATAU GALERI
+        // ==========================================
+        function pilihKamera() {
+            const inputFoto = document.getElementById('foto_kandidat');
+            inputFoto.setAttribute('capture', 'environment');
+            inputFoto.click();
+        }
+
+        function pilihGaleri() {
+            const inputFoto = document.getElementById('foto_kandidat');
+            inputFoto.removeAttribute('capture');
+            inputFoto.click();
+        }
 
         const fotoInput = document.getElementById('foto_kandidat');
         const photoPreview = document.getElementById('photoPreview');
