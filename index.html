@@ -613,6 +613,21 @@
             btnSubmit.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Memproses...`;
 
             try {
+                // ==============================================================
+                // FITUR BARU: AUTO-REFRESH ID TEPAT SEBELUM DATA DIKIRIM
+                // ==============================================================
+                const inputID = document.getElementById('id_wawancara');
+                inputID.value = "Sinkronisasi No..."; // Indikator visual ke user
+                
+                const idResponse = await fetch(`${scriptURL}?action=getLatestID`);
+                const idResult = await idResponse.json();
+                
+                if (idResult.status === 'success') {
+                    inputID.value = idResult.nextID; // Update dengan nomor paling fresh
+                }
+                // ==============================================================
+
+                // Setelah nomor dipastikan up-to-date, baru data dibungkus
                 const formData = new FormData(form);
                 const dataObj = Object.fromEntries(formData.entries());
 
@@ -624,6 +639,7 @@
                     dataObj.foto_name = `${dataObj.id_wawancara}_${dataObj.nama.replace(/\s+/g, '_')}`; 
                 }
 
+                // Kirim data ke Google Apps Script
                 const response = await fetch(scriptURL, {
                     method: 'POST',
                     body: JSON.stringify(dataObj) 
@@ -632,13 +648,16 @@
                 const result = await response.json();
 
                 if (result.status === 'success') {
+                    // Update teks modal sukses dengan nomor urut final
+                    const modalDesc = document.querySelector('#modalSukses p');
+                    modalDesc.innerHTML = `Data kandidat telah diunggah ke sistem.<br><br>No. Referensi Final: <b>${dataObj.id_wawancara}</b>`;
+
                     document.getElementById('modalSukses').style.display = 'flex'; 
                     
                     form.reset(); 
                     photoPreview.innerHTML = `<span class="block"><svg class="w-7 h-7 mx-auto mb-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Foto</span>`; 
                     
-                    // Request nomor baru dari Google Sheet setelah sukses menyimpan
-                    generateInterviewID(); 
+                    generateInterviewID(); // Siapkan nomor untuk kandidat berikutnya
                     
                     muatDataInterviewer(); 
                     muatDataProgram(); 
